@@ -3,6 +3,13 @@ Basic python scripts that modify the color patch files in Gran Turismo 4, which 
 
 Current tooling is crude and unfinished, and practical applications will require some manual hex editing.
 
+Credit goes to Nenkai for file format research and figuring.
+https://github.com/Nenkai/GT-File-Specifications-Documentation
+
+To do:
+- Integrate both scripts into one
+- Automate remaining processes that currently require manual hex editing
+
 How to use:
 
 1. Extract the .pat file from the Menu model and save to a separate file.
