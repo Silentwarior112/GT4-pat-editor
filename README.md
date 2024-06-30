@@ -10,6 +10,11 @@ To do:
 - Integrate both scripts into one
 - Automate remaining processes that currently require manual hex editing
 
+Bringing back the Pink Vitz:
+<p align="center">
+  <img width="800" height="630" src="https://github.com/Silentwarior112/GT-Trackmaps/blob/main/Examples/apricothill.png">
+</p>
+
 How to use:
 
 1. Extract the .pat file from the Menu model and save to a separate file.
