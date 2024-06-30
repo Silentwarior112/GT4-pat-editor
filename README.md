@@ -12,7 +12,7 @@ To do:
 
 Bringing back the Pink Vitz:
 <p align="center">
-  <img width="800" height="630" src="https://github.com/Silentwarior112/GT-Trackmaps/blob/main/Examples/apricothill.png">
+  <img width="800" height="630" src="https://github.com/Silentwarior112/GT4-pat-editor/blob/main/pink%20vitz.PNG">
 </p>
 
 How to use:
