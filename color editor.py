@@ -89,8 +89,7 @@ class PatFile:
 
                 self.patches[paint_index] = {
                     'header_offsets': paint_patches,
-                    'paint_data': paint_data,
-                    'note': ''
+                    'paint_data': paint_data
                 }
 
     def save(self, filename):
@@ -101,10 +100,13 @@ class PatFile:
                 f.write(b'\x00' * 12)
 
                 # Write patch count and geometry patches per color patch
-                patch_count = len(self.patches[0]['paint_data'])  # Assuming all paints have the same number of patches
-                geometry_patches_per_color_patch = len(self.patches[0]['paint_data'][0]['colors'])  # Assuming all patches have the same number of colors
-                f.write(struct.pack('<H', geometry_patches_per_color_patch))
+                patch_count = self.patch_count
+                geometry_patches_per_color_patch = self.geometry_patches_per_color_patch
                 f.write(struct.pack('<H', patch_count))
+                f.write(struct.pack('<H', geometry_patches_per_color_patch))
+
+                print(f"patch_count: {patch_count}")
+                print(f"patch_count: {geometry_patches_per_color_patch}")
 
                 # Pad to next factor of 16
                 f.write(b'\x00' * (16 - (f.tell() % 16)))
@@ -205,8 +207,6 @@ class PatEditor(tk.Tk):
     def save_file(self):
         save_path = filedialog.asksaveasfilename(defaultextension=".pat", filetypes=[("PAT files", "*.pat")])
         if save_path:
-            for paint_index, paint in enumerate(self.pat_file.get_patches()):
-                paint['note'] = paint['note_entry'].get()
             self.pat_file.save(save_path)
             messagebox.showinfo("Save", "File saved successfully")
 
