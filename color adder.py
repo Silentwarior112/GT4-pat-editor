@@ -42,8 +42,8 @@ def add_color_entry(data):
 
 def select_file():
     file_path = filedialog.askopenfilename(
-        title="Select a binary file",
-        filetypes=[("Binary files", "*.bin"), ("All files", "*.*")]
+        title="Select a color patch file",
+        filetypes=[("PAT files", "*.pat"), ("All files", "*.*")]
     )
     if file_path:
         data = read_file(file_path)
