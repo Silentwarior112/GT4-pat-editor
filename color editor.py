@@ -162,31 +162,46 @@ class PatEditor(tk.Tk):
         self.create_widgets()
 
     def create_widgets(self):
+        # Create a scrolled canvas for the notebook
         self.canvas = ScrolledCanvas(self)
         self.canvas.pack(expand=True, fill='both')
-
+    
         self.notebook = ttk.Notebook(self.canvas.scrollable_frame)
         self.notebook.pack(expand=True, fill='both')
-
-        for paint_index, paint in enumerate(self.pat_file.patches):
+    
+        for paint_index, paint in enumerate(self.pat_file.get_patches()):
             paint_frame = ttk.Frame(self.notebook)
             self.notebook.add(paint_frame, text=f"Paint {paint_index}")
-
-            color_frame = ttk.Frame(paint_frame)
-            color_frame.pack(expand=True, fill='both')
-
-            for patch_data in paint['paint_data']:
+    
+            for patch_index, patch_data in enumerate(paint['paint_data']):
+                patch_collapse = CollapsibleFrame(paint_frame, text=f"Patch {patch_index}")
+                patch_collapse.pack(fill='x', padx=5, pady=5)
+    
+                frame = ttk.Frame(patch_collapse.sub_frame)
+                frame.pack(pady=5, fill='x')
+    
+                # Display Target Offset
+                target_offset_label = ttk.Label(frame, text=f"Target Offset: {patch_data['target_offset']}")
+                target_offset_label.pack(side='left', padx=5)
+    
+                # Display Patch Size
+                patch_size_label = ttk.Label(frame, text=f"Patch Size: {patch_data['actual_patch_size']}")
+                patch_size_label.pack(side='left', padx=5)
+    
+                # Display RGBO Colors using Canvas and rectangles
+                color_frame = ttk.Frame(frame)
+                color_frame.pack(side='left', padx=5, pady=5)
+    
+                patch_data['color_canvases'] = []
                 for color_index, color in enumerate(patch_data['colors']):
-                    if color_index % 32 == 0:
-                        row_frame = ttk.Frame(color_frame)
-                        row_frame.pack(side='top', fill='x')
-                
-                    color_swatch = tk.Canvas(row_frame, width=16, height=16)
-                    color_swatch.pack(side='left', padx=2, pady=2)
-                
+                    color_swatch = tk.Canvas(color_frame, width=30, height=20)
+                    color_swatch.pack(side='top', pady=2)
+    
                     rgb_color = color[:3]
                     hex_color = self.rgb_to_hex(rgb_color)
-                    color_swatch.create_rectangle(0, 0, 16, 16, fill=hex_color)
+                    color_swatch.create_rectangle(0, 0, 30, 20, fill=hex_color)
+    
+                    patch_data['color_canvases'].append(color_swatch)
 
         save_button = ttk.Button(self, text="Save", command=self.save_file)
         save_button.pack(side='left', padx=5, pady=5)
@@ -205,13 +220,13 @@ class PatEditor(tk.Tk):
         return f"#{rgb[0]:02x}{rgb[1]:02x}{rgb[2]:02x}"
 
     def save_file(self):
-        save_path = filedialog.asksaveasfilename(defaultextension=".pat", filetypes=[("PAT files", "*.pat")])
+        save_path = filedialog.asksaveasfilename(defaultextension=".pat", filetypes=[("PAT files", "*.pat"), ("All files", "*.*")])
         if save_path:
             self.pat_file.save(save_path)
             messagebox.showinfo("Save", "File saved successfully")
 
     def export_png(self):
-        export_path = filedialog.asksaveasfilename(defaultextension=".png", filetypes=[("PNG files", "*.png")])
+        export_path = filedialog.asksaveasfilename(defaultextension=".png", filetypes=[("PNG files", "*.png"), ("All files", "*.*")])
         if export_path:
             self.create_png(export_path)
             messagebox.showinfo("Export", "PNG exported successfully")
@@ -227,7 +242,7 @@ class PatEditor(tk.Tk):
         image.save(path)
 
     def load_png(self):
-        png_path = filedialog.askopenfilename(filetypes=[("PNG files", "*.png")])
+        png_path = filedialog.askopenfilename(filetypes=[("PNG files", "*.png"), ("All files", "*.*")])
         if png_path:
             try:
                 self.update_from_png(png_path)
@@ -237,33 +252,32 @@ class PatEditor(tk.Tk):
     def update_from_png(self, png_path):
         paint_index = self.notebook.index('current')
         paint = self.pat_file.get_patches()[paint_index]
-
+    
         try:
             png_image = Image.open(png_path)
             png_pixels = png_image.load()
-
+    
             # Ensure PNG width matches the number of colors in the current paint
             if png_image.width != sum(len(patch['colors']) for patch in paint['paint_data']):
                 messagebox.showerror("Error", "PNG width does not match number of colors in the current paint")
                 return
-
+    
             color_index = 0
             for patch_data in paint['paint_data']:
                 for color_idx, color in enumerate(patch_data['colors']):
                     new_color = png_pixels[color_index, 0]
                     patch_data['colors'][color_idx] = new_color
                     color_index += 1
-
+    
             # Update GUI with new colors
             for patch_data in paint['paint_data']:
                 for color_index, new_color in enumerate(patch_data['colors']):
                     rgb_hex = self.rgb_to_hex(new_color[:3])
                     patch_data['color_canvases'][color_index].delete("all")  # Clear previous rectangle
                     patch_data['color_canvases'][color_index].create_rectangle(0, 0, 30, 20, fill=rgb_hex)  # Update color swatch
-                    patch_data['color_labels'][color_index].config(text=f"RGBO: {new_color}")  # Update color label
-
+    
             messagebox.showinfo("Load PNG", "PNG loaded successfully and applied to current paint")
-
+    
         except Exception as e:
             messagebox.showerror("Error", f"Failed to update from PNG: {e}")
 
@@ -282,7 +296,7 @@ class MainApp(tk.Tk):
         open_button.pack(expand=True)
 
     def open_pat_file(self):
-        file_path = filedialog.askopenfilename(filetypes=[("PAT files", "*.pat")])
+        file_path = filedialog.askopenfilename(filetypes=[("PAT files", "*.pat"), ("All files", "*.*")])
         if file_path:
             try:
                 pat = PatFile(file_path)
