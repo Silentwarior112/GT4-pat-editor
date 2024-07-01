@@ -37,7 +37,7 @@ For determining which pixels are the right ones,
 it's best to compare two colors that are not shades.
 For example, green and blue.
 
-5. Open the PNGs in an image editor, and splice the strips together.
+4. Open the PNGs in an image editor, and splice the strips together.
 Pick one of strips to modify.
 Take the selection tool on add mode, and
 select each pixel in the strip that is different
@@ -49,16 +49,16 @@ Most obvious example is the door handle of the car.
 Once the strip is modified, get rid of the comparison strip and
 then save the new png.
 
-6. Go back to the color editor, and import your PNG strip into whichever paint tab you want to overwrite, then save.
+5. Go back to the color editor, and import your PNG strip into whichever paint tab you want to overwrite, then save.
 This should be the new one that you added in the previous step, but you can also edit existing colors
 in the patch as well if you want to.
 
-7. Repeat this process for each pat file the car has, the menu pat and the lod/open pat.
+6. Repeat this process for each pat file the car has, the menu pat and the lod/open pat.
 Also, menu pats and lod/open pats have different data sizes, so you can't use the same PNG strip for
 both. You will want to take note of the exact hue shift settings / effects you applied to the first one,
 then apply the same exact settings to the other, to get consistent results between the menu model and lod/open model.
 
-8. Last, overwrite the new menu pat file into the menu model.
+7. Last, overwrite the new menu pat file into the menu model.
 Highlight the entire data chunk, then paste the new pat file over it.
 Make sure that it overwrites the old data, then inserts the overflow, so that
 no data beyond the pat is erased.
