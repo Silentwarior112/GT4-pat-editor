@@ -66,7 +66,7 @@ no data beyond the pat is erased.
 After that, update the menu model offsets that are affected.
 (See image)
 
-Now simply oveerwrite the original lod/open pat with the new one.
+Now simply overwrite the original lod/open pat with the new one.
 
 To register the new paint color into the game, update the spec database's VARIATION[region] table
 and add a new entry for the car, making sure to at least update the VarOrder cell, but also
