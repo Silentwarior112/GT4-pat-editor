@@ -61,9 +61,9 @@ def add_color():
 def save_file():
     if hasattr(root, 'file_data'):
         file_path = filedialog.asksaveasfilename(
-            title="Save the modified file",
+            title="Save the modified pat file",
             defaultextension=".bin",
-            filetypes=[("Binary files", "*.bin"), ("All files", "*.*")]
+            filetypes=[("PAT files", "*.pat"), ("All files", "*.*")]
         )
         if file_path:
             with open(file_path, 'wb') as f:
