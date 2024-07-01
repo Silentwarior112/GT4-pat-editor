@@ -85,7 +85,7 @@ def update_display():
 # GUI setup
 root = tk.Tk()
 root.title("Color Entry Adder")
-root.geometry("400x280")
+root.geometry("400x320")
 
 select_button = tk.Button(root, text="Select File", command=select_file)
 select_button.pack(pady=10)
