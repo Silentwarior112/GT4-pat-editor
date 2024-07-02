@@ -15,6 +15,11 @@ Bringing back the Pink Vitz:
   <img width="640" height="360" src="https://github.com/Silentwarior112/GT4-pat-editor/blob/main/pink%20vitz.PNG">
 </p>
 
+Adding the infamous Y49 Barbados Yellow to the 1990 CR-X:
+<p align="center">
+  <img width="640" height="360" src="https://github.com/Silentwarior112/GT4-pat-editor/blob/main/yellowcrx.png">
+</p>
+
 How to use:
 
 1. Extract the .pat file from the Menu model and save to a separate file.
@@ -44,21 +49,30 @@ select each pixel in the strip that is different
 in hue to the other strip.
 Once they are all selected, apply your desired adjustments/effects.
 Really though, the only practical adjustment is the Hue.
-Brightness can't be modified, as this will mess up the shading.
-Most obvious example is the door handle of the car.
+The best way to modify the hue is to use the levels tool (paint.net)
+or equivalent. Find the brightest, most opaque, and most saturated pixel in the strip,
+and use the color values from it as the input values in the levels tool.
+Then, set the output values to a desired color.
+For example, you can look up a manufacturer paint code and
+convert it to an approximated RGB value to use here.
+Other effects and adjustments to the pixels will likely
+mess up the shading, so be mindful.
+The most obvious sign of poor editing is the door handle area of the car.
 Once the strip is modified, get rid of the comparison strip and
 then save the new png.
+Before closing the image editor, it would also be wise to
+separately save a 'selection layer' that marks every pixel that needs to be edited.
 
-5. Go back to the color editor, and import your PNG strip into whichever paint tab you want to overwrite, then save.
+6. Go back to the color editor, and import your PNG strip into whichever paint tab you want to overwrite, then save.
 This should be the new one that you added in the previous step, but you can also edit existing colors
 in the patch as well if you want to.
 
-6. Repeat this process for each pat file the car has, the menu pat and the lod/open pat.
+7. Repeat this process for each pat file the car has, the menu pat and the lod/open pat.
 Also, menu pats and lod/open pats have different data sizes, so you can't use the same PNG strip for
 both. You will want to take note of the exact hue shift settings / effects you applied to the first one,
 then apply the same exact settings to the other, to get consistent results between the menu model and lod/open model.
 
-7. Last, overwrite the new menu pat file into the menu model.
+8. Last, overwrite the new menu pat file into the menu model.
 Highlight the entire data chunk, then paste the new pat file over it.
 Make sure that it overwrites the old data, then inserts the overflow, so that
 no data beyond the pat is erased.
