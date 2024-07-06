@@ -8,6 +8,7 @@ https://github.com/Nenkai/GT-File-Specifications-Documentation
 
 To do:
 - Integrate all scripts into one
+- Add more images for usage instructions
 
 Bringing back the Pink Vitz:
 <p align="center">
