@@ -1,0 +1,9 @@
+-- Midori Green Pearl--
+Spec Database Color chip: 60740761, 0, 0, 0
+
+Edit info:
+Edited from Vogue Silver Metallic
+
+Adjustments:
+Levels input: 199,199,199
+Levels output: 137,211,151
