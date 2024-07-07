@@ -20,6 +20,11 @@ Adding the infamous Y49 Barbados Yellow to the 1990 CR-X:
   <img width="640" height="360" src="https://github.com/Silentwarior112/GT4-pat-editor/blob/main/yellowcrx.png">
 </p>
 
+Adding the 1996 DX and CX exclusive Midori Green Pearl to the '97 Civic Type R:
+<p align="center">
+  <img width="640" height="360" src="https://github.com/Silentwarior112/GT4-pat-editor/blob/main/midoricivic.png">
+</p>
+
 How to use:
 
 1. Extract the .pat file from the Menu model and save to a separate file.
