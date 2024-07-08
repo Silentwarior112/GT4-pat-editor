@@ -1,0 +1,9 @@
+-- GT3 Pink Vitz Pink --
+Spec Database Color chip: 58687487, 0, 0, 0
+
+Edit info:
+Edited from White
+
+Adjustments:
+Levels input: 245,245,240
+Levels output: 255,127,127
