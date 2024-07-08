@@ -14,6 +14,15 @@ def add_color_entry(data):
     offsets = [int.from_bytes(data[i:i+4], 'little') for i in range(offset_start, data_start, 4)]
     block_size = offsets[offset_count_per_color] - offsets[0]
     offset_chunk_size = offset_count_per_color * 4
+    last_offset = offsets[-1]
+    
+    last_offset_patchsize_location = last_offset + 4
+    last_patch_size = int.from_bytes(data[last_offset_patchsize_location:last_offset_patchsize_location+4], 'little')
+    
+    last_patch_byte_count = (last_patch_size + 3) // 4 * 4
+    new_entry_start = last_offset_patchsize_location + 4 + last_patch_byte_count
+    
+    data = data[:new_entry_start]  # Remove padding bytes
     
     new_color_data = data[offsets[-offset_count_per_color]:offsets[-1] + block_size]
     
