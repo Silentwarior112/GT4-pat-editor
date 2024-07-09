@@ -1,0 +1,43 @@
+-- Blue --
+Spec Database Color chip: 63727925, 0, 0, 0
+
+Edit info:
+Edited from Crystal Galaxit Silver
+
+Adjustments:
+Levels input: 188,188,188
+Levels output: 64,144,255
+
+-- Red --
+Spec Database Color chip: 50331864, 0, 0, 0
+
+Edit info:
+Edited from Crystal Galaxit Silver
+
+Adjustments:
+Levels input: 188,188,188
+Levels output: 216,0,0
+
+-- White --
+Spec Database Color chip: 64016592, 0, 0, 0
+
+Edit info:
+Edited from -- Red --
+
+Adjustments:
+Black & White,
+Levels input: 61,61,61,
+Levels output: 255,255,255
+1st 7 pixels in strip: Overwrite 32,32,32, 0 opacity
+
+-- Grey --
+Spec Database Color chip: 53489712, 0, 0, 0
+
+Edit info:
+Edited from -- Red --
+
+Adjustments:
+Black & White,
+Levels input: 61,61,61,
+Levels output: 51,53,51
+1st 7 pixels in strip: Overwrite 32,32,32, 0 opacity
