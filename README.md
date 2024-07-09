@@ -25,6 +25,12 @@ Adding the 1996 DX and CX exclusive Midori Green Pearl to the '97 Civic Type R:
   <img width="640" height="360" src="https://github.com/Silentwarior112/GT4-pat-editor/blob/main/midoricivic.png">
 </p>
 
+Adding new vibrant colors to the SLR Mclaren:
+<p align="center">
+  <img width="640" height="360" src="https://github.com/Silentwarior112/GT4-pat-editor/blob/main/slr%20mclarens.png">
+</p>
+
+
 How to use:
 
 1. Extract the .pat file from the Menu model and save to a separate file.
