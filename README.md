@@ -32,7 +32,7 @@ Adding new vibrant colors to the SLR Mclaren:
 
 Adding missing factory colors to the '95 Eclipse:
 <p align="center">
-  <img width="640" height="360" src="https://github.com/Silentwarior112/GT4-pat-editor/blob/main/eclipses.PNG">
+  <img width="640" height="483" src="https://github.com/Silentwarior112/GT4-pat-editor/blob/main/eclipses.PNG">
 </p>
 
 How to use:
