@@ -1,0 +1,150 @@
+Menu .pat:
+
+Rebuilt the color patch file with additional target offsets:
+0x362,
+0x366,
+0x36A,
+0x372,
+0x376,
+0x37A,
+and 0x392.
+
+Material values:
+
+-- Default / Original: Gloss --
+0x362, 80 3F
+0x366, 80 3F
+0x36A, 80 3F // Brightness adjustment for darkest areas
+
+0x372, 00 00
+0x376, 00 00
+0x37A, 00 00
+0x392, 00 00 // Brightnest adjustment for brightest areas
+
+
+
+-- Silver / Pearls --
+0x362, 00 3F
+0x366, 00 3F
+0x36A, 00 3F // Darkening dark areas further
+
+0x372, C0 3F
+0x376, C0 3F
+0x37A, C0 3F
+0x392, 80 41 // Brightening bright areas further
+
+(Starting from 0) Patch 12, 29, and 45: Changed patch size from 33 --> 35
+Fixes issue of only reading the red value but not green & blue on last pixel in patch
+
+----------------------------------------------------------------------
+
+lod .pat:
+
+Replaced first target offsets to:
+0x232: Patch size 2
+0x502: Patch size 2
+0x520: Patch size 1C
+0x552: Patch size 2
+**Begin target offset 0x4C480 and beyond**
+
+(Starting from 0) Patch 4, 8, 23, 33, 37, 94, 99, and 109: Changed patch size from 33 --> 35
+Fixes issue of only reading the red value but not green & blue on last pixel in patch
+
+Material values:
+
+-- Default / Original: Gloss --
+0x520:
+00 00 80 3F, 
+00 00 80 3F, 
+00 00 80 3F, // Brightness adjustment for darkest areas
+00 00 80 3F, // Normally this is skipped, we are simply patching the original bytes back onto it because lumping this in saves some bytes 
+00 00 00 00, 
+00 00 00 00, 
+00 00 00 00
+
+0x552: 00 00 // Brightnest adjustment for brightest areas
+
+-- Silver / Pearls --
+
+0x520:
+00 00 00 3F, 
+00 00 00 3F, 
+00 00 00 3F, // Darkening dark areas further
+00 00 80 3F, // Normally this is skipped, we are simply patching the original bytes back onto it
+00 00 C0 3F, 
+00 00 C0 3F, 
+00 00 C0 3F
+
+0x552: 80 41 // Brightening brightest areas further
+
+----------------------------------------------------------------------
+
+-- Minden Silver Pearl --
+Spec Database Color chip: 60859813, 0, 0, 0
+
+Edit info:
+Edited from Pasadena Red (The correct name is Saronno Red)
+
+Adjustments:
+Black & White
+Levels input: 42,42,42
+Levels output: 208,208,208
+
+-- Biscayne Green Pearl --
+Spec Database Color chip: 56265873, 0, 0, 0
+
+Edit info:
+Edited from Pasadena Red
+
+Adjustments:
+Black & White
+Levels input: 42,42,42
+Levels output: 173,168,107
+Copied material pixels from Minden Silver Pearl (lod: 1st 10 pixels, menu: 1st 12)
+
+-- Northstar white --
+Spec Database Color chip: 64740315, 0, 0, 0
+
+Edit info:
+Edited from Pasadena Red
+
+Adjustments:
+Black & White
+Levels input: 42,42,42
+Levels output: 243,245,244
+
+-- Everett Green Metallic --
+Spec Database Color chip: 51975683, 0, 0, 0
+
+Edit info:
+Edited from Pasadena Red
+
+Adjustments:
+Black & White
+Levels input: 42,42,42
+Levels output: 3,22,25
+Copied material pixels from Minden Silver Pearl (lod: 1st 10 pixels, menu: 1st 12)
+
+-- Durango Copper Pearl --
+Spec Database Color chip: 52574857, 0, 0, 0
+
+Edit info:
+Edited from Pasadena Red
+
+Adjustments:
+Black & White
+Levels input: 42,42,42
+Levels output: 164,69,40
+Copied material pixels from Minden Silver Pearl (lod: 1st 10 pixels, menu: 1st 12)
+
+-- Kona Blue Pearl --
+Spec Database Color chip: 52574857, 0, 0, 0
+
+Edit info:
+Edited from Pasadena Red
+
+Adjustments:
+Black & White
+Levels input: 42,42,42
+Levels output: 15,68,153
+Copied material pixels from Minden Silver Pearl (lod: 1st 10 pixels, menu: 1st 12)
