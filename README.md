@@ -38,15 +38,17 @@ Adding missing factory colors to the '95 Eclipse:
 How to use:
 
 1. Extract the .pat file from the Menu model and save to a separate file.
-Before starting, it's recommended to copy the menu model and the lod/open pat file
-to a separate folder to keep things organized.
+It's recommended to create a new folder to hold the assets for the particular car you're going to work on.
+Name it the model code (hond0008 for example), and create it in the same directory as your car/menu folder in your host filesystem.
+Create a shortcut file to the menu model file, and one to the lod model .pat file and add both of these shortcuts to your folder to make
+the UI navigation easier.
 
 Using the model extractor & rebuilder script, click "Extract model" and find your model file.
 Then, select the desired assets to extract from the model.
 For this, you would only need to select the MainModelColorPatch, and maybe the WheelColorPatch if
 that particular car has multiple wheel colors and you want to add extra wheel colors.
 Examples of these are: 'integra_r_03' (hond0036) and '_5_turbo_80' (re__0003).
-Save the files, then proceed to modify the color patch file.
+Save the files to your folder, then proceed to modify the color patch file.
 
 2. Using the color adder script, add additional color entries to the pat file and save.
 Do this for both the menu pat, and the lod/open pat.
