@@ -35,6 +35,11 @@ Adding missing factory colors to the '95 Eclipse:
   <img width="640" height="483" src="https://github.com/Silentwarior112/GT4-pat-editor/blob/main/eclipses.PNG">
 </p>
 
+Adding the 1996 Exclusive Blue with white stripes to the '99 Viper GTS:
+<p align="center">
+  <img width="640" height="483" src="https://github.com/Silentwarior112/GT4-pat-editor/blob/main/blueviper.PNG">
+</p>
+
 How to use:
 
 1. Extract the .pat file from the Menu model and save to a separate file.
