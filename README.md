@@ -40,6 +40,11 @@ Adding the 1996 Exclusive Blue with white stripes to the '99 Viper GTS:
   <img width="640" height="483" src="https://github.com/Silentwarior112/GT4-pat-editor/blob/main/blueviper.PNG">
 </p>
 
+Adding a solid white Toyota TS020:
+<p align="center">
+  <img width="640" height="483" src="https://github.com/Silentwarior112/GT4-pat-editor/blob/main/white%20ts020%202.PNG">
+</p>
+
 How to use:
 
 1. Extract the .pat file from the Menu model and save to a separate file.
