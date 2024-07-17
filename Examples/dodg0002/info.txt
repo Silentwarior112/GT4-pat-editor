@@ -1,0 +1,9 @@
+-- Blue with white stripes --
+Spec Database Color chip: 26095650, 59650082, 63227076, 0
+
+Edit info:
+Edited from Silver with blue stripes
+
+Adjustments:
+Body: 209,209,209 to 34,48,142
+Stripes: 170,170,170 to 224,224,224
