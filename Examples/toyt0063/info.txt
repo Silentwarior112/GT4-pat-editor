@@ -1,0 +1,34 @@
+Menu .pat:
+
+Edit info:
+Edited from Stealth livery
+
+Adjustments:
+Black & White
+
+Levels input: 34,34,34
+Levels output: 255,255,255
+
+At pixels 389, 391, 394 - 401: Overwrite color from pixel 390 (Removes faint outline of windshield logo)
+
+At pixel 490: Write 0,0,0,128 (To darken the roof scoop hole)
+
+
+lod .pat:
+
+Edit info:
+Edited from Stealth livery
+
+Adjustments:
+
+For target offset 319,524 (0x4E024), update patch size from 2D to 30
+Fixes necessary bytes not being patched)
+
+manually un-byteshift byte-shifted pixels and pencil them in above originals to prepare them for level adjustment
+
+Levels input: 34,34,34
+Levels output: 255,255,255
+
+manually re-byteshift new un-byteshifted pixels, write them over originals
+
+At pixels 582, 580, 585 - 598: Overwrite color from pixel 581 (Removes faint outline of windshield logo)
