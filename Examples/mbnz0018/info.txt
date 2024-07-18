@@ -9,7 +9,7 @@ Levels input: 188,188,188
 Levels output: 64,144,255
 
 -- Red --
-Spec Database Color chip: 50331864, 0, 0, 0
+Spec Database Color chip: 16777392, 0, 0, 0
 
 Edit info:
 Edited from Crystal Galaxit Silver
