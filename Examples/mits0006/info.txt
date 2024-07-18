@@ -138,7 +138,7 @@ Levels output: 164,69,40
 Copied material pixels from Minden Silver Pearl (lod: 1st 10 pixels, menu: 1st 12)
 
 -- Kona Blue Pearl --
-Spec Database Color chip: 52574857, 0, 0, 0
+Spec Database Color chip: 26821647, 0, 0, 0
 
 Edit info:
 Edited from Pasadena Red
