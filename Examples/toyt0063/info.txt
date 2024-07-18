@@ -32,3 +32,8 @@ Levels output: 255,255,255
 manually re-byteshift new un-byteshifted pixels, write them over originals
 
 At pixels 582, 580, 585 - 598: Overwrite color from pixel 581 (Removes faint outline of windshield logo)
+
+
+-- White --
+Spec Database Color chip: 29409472, 0, 0, 0
+
