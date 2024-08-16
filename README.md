@@ -78,6 +78,24 @@ if a pixel is different (thus a relevant pixel) versus the same (not relevant).
 Take the selection tool on add mode, and
 select each relevant pixel in the strip.
 Alternate between the color picker and selection tool until all relevant pixels are selected.
+Some cars will have color patches with byte-shifted target offsets, missing target offsets, and incomplete
+patch sizes. Remember, we are technically editing bytes directly, not actual pixels necessarily. In these cases,
+you'll have to do various things to fix these issues. For incomplete patch sizes, this will cause certain
+spots on the car to not change color fully. Typically this is seen as a patch size that doesn't cover
+the full 4 bytes for a certain color, so the remaining 1-3 bytes don't get patched. As seen on the Eclipse,
+there was a section within the front grille that would stay red despite adding green and blue color values to the pixel.
+Manual hex editing of the pat file is required to adjust patch sizes currently.
+For missing target offsets, this will prevent you from editing certain things about the paint, like
+materials. This is common on cars with low color counts, as the original color options might not
+have different material parameters, so the color patch won't include the bytes necessary to change it.
+Manual hex editing of the pat file is required to add / change target offsets currently.
+For byte-shifted offsets, this will cause certain pixels in the PNG strip to be mis-aligned
+and make it difficult to know what the actual color data should be.
+In my limited work of the cars I have done, this has only happened with the Toyota TS020, and should be quite rare.
+You can inspect the bytes being patched and try to correct the target offsets in question, or you can simply
+deduce which pixels are mis-aligned through trial and error, and then set the Red, green, blue, and opacity values
+accordingly, which is equally as tedious as adjusting the target offsets.
+
 Once they are all selected, apply your desired adjustments/effects.
 Really though, the only practical adjustment is the Hue.
 The best way to modify the hue is to use the levels tool (paint.net)
@@ -94,19 +112,19 @@ then save the new png.
 Before closing the image editor, it would also be wise to
 separately save a 'selection layer' that marks every pixel that needs to be edited.
 
-5. Go back to the color editor, and import your PNG strip into whichever paint tab you want to overwrite, then save.
+6. Go back to the color editor, and import your PNG strip into whichever paint tab you want to overwrite, then save.
 This should be the new one that you added in the previous step, but you can also edit existing colors
 in the patch as well if you want to.
 
-6. Repeat this process for each pat file the car has, the menu pat(s) and the lod/open pat(s).
+7. Repeat this process for each pat file the car has, the menu pat(s) and the lod/open pat(s).
 Also, menu pats and lod/open pats have different data sizes, so you can't use the same PNG strip for
 both. You will want to take note of the exact hue shift settings / effects you applied to the first one,
 then apply the same exact settings to the other, to get consistent results between the menu model and lod/open model.
 
-7. Update the menu model with the new pat file(s).
+8. Update the menu model with the new pat file(s).
 Go back to the the model extractor & rebuilder script to overwrite the new menu pat file(s) into the menu model.
 
-8. With your new Menu model and new lod/open patch file, simply overwrite the original file(s) with the new ones.
+9. With your new Menu model and new lod/open patch file, simply overwrite the original file(s) with the new ones.
 
 To register the new paint color into the game, update the spec database's VARIATION[region] table
 and add a new entry for the car, making sure to at least update the VarOrder cell, but also
