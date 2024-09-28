@@ -173,11 +173,11 @@ class PatEditor(tk.Tk):
             paint_frame = ttk.Frame(self.notebook)
             self.notebook.add(paint_frame, text=f"Paint {paint_index}")
     
-            for patch_index, patch_data in enumerate(paint['paint_data']):
-                patch_collapse = CollapsibleFrame(paint_frame, text=f"Patch {patch_index}")
+            #for patch_index, patch_data in enumerate(paint['paint_data']):
+                #patch_collapse = CollapsibleFrame(paint_frame, text=f"Patch {patch_index}")
                 #patch_collapse.pack(fill='x', padx=5, pady=5)
     
-                frame = ttk.Frame(patch_collapse.sub_frame)
+                #frame = ttk.Frame(patch_collapse.sub_frame)
                 #frame.pack(pady=5, fill='x')
     
                 # Display Target Offset
@@ -189,19 +189,19 @@ class PatEditor(tk.Tk):
                 #patch_size_label.pack(side='left', padx=5)
     
                 # Display RGBO Colors using Canvas and rectangles
-                color_frame = ttk.Frame(frame)
+                #color_frame = ttk.Frame(frame)
                 #color_frame.pack(side='left', padx=5, pady=5)
     
-                patch_data['color_canvases'] = []
-                for color_index, color in enumerate(patch_data['colors']):
-                    color_swatch = tk.Canvas(color_frame, width=20, height=10)
-                    color_swatch.pack(side='top', pady=2)
+                #patch_data['color_canvases'] = []
+                #for color_index, color in enumerate(patch_data['colors']):
+                    #color_swatch = tk.Canvas(color_frame, width=20, height=10)
+                    #color_swatch.pack(side='top', pady=2)
     
-                    rgb_color = color[:3]
-                    hex_color = self.rgb_to_hex(rgb_color)
-                    color_swatch.create_rectangle(0, 0, 30, 20, fill=hex_color)
+                    #rgb_color = color[:3]
+                    #hex_color = self.rgb_to_hex(rgb_color)
+                    #color_swatch.create_rectangle(0, 0, 30, 20, fill=hex_color)
     
-                    patch_data['color_canvases'].append(color_swatch)
+                    #patch_data['color_canvases'].append(color_swatch)
 
         save_button = ttk.Button(self, text="Save", command=self.save_file)
         save_button.pack(side='left', padx=5, pady=5)
