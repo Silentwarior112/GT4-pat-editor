@@ -4,25 +4,6 @@ from tkinter import filedialog, messagebox
 from tkinter import ttk
 from PIL import Image, ImageTk
 
-class ScrolledCanvas(tk.Canvas):
-    def __init__(self, parent, *args, **kwargs):
-        super().__init__(parent, *args, **kwargs)
-        self.scrollbar = ttk.Scrollbar(parent, orient="vertical", command=self.yview)
-        self.scrollable_frame = ttk.Frame(self)
-
-        self.scrollable_frame.bind(
-            "<Configure>",
-            lambda e: self.configure(
-                scrollregion=self.bbox("all")
-            )
-        )
-
-        self.create_window((0, 0), window=self.scrollable_frame, anchor="nw")
-        self.configure(yscrollcommand=self.scrollbar.set)
-
-        self.pack(side="left", fill="both", expand=True)
-        self.scrollbar.pack(side="right", fill="y")
-
 class PatFile:
     def __init__(self, filename=None):
         self.filename = filename
@@ -35,23 +16,19 @@ class PatFile:
         with open(self.filename, 'rb') as f:
             # Read magic number
             self.magic = f.read(4)
-            print(f"Magic: {self.magic}")
             if self.magic != b'Pat0':
                 raise ValueError("Not a valid .pat file")
 
             # Read padding
             padding = f.read(12)
-            print(f"Padding: {padding}")
 
             # Read patch count and geometry patches per color patch
             patch_count_and_geometry = f.read(4)
             self.patch_count, self.geometry_patches_per_color_patch = struct.unpack('<HH', patch_count_and_geometry)
-            print(f"Patch Count: {self.patch_count}, Geometry Patches per Color Patch: {self.geometry_patches_per_color_patch}")
 
             # Read the offsets in the header
             while f.tell() % 16 != 0:
                 pad_byte = f.read(1)
-                print(f"Padding Byte: {pad_byte}")
 
             for _ in range(self.patch_count):
                 paint_patches = []
@@ -59,7 +36,6 @@ class PatFile:
                     offset_bytes = f.read(4)
                     offset = struct.unpack('<I', offset_bytes)[0]
                     paint_patches.append(offset)
-                    print(f"Header Offset: {offset}, Bytes: {offset_bytes}")
                 self.patches.append(paint_patches)
 
             # Read the color patches based on the offsets
@@ -69,14 +45,11 @@ class PatFile:
                     f.seek(offset)
                     offset_data = f.read(8)
                     target_offset, patch_size = struct.unpack('<II', offset_data)
-                    print(f"Target Offset: {target_offset}, Patch Size: {patch_size}, Bytes: {offset_data}")
 
-                    # Read patch data
                     actual_patch_size = patch_size
                     remaining_bytes = (4 - patch_size % 4) % 4  # Calculate padding bytes
                     trunc_patch_size = patch_size + remaining_bytes
                     patch_data = f.read(trunc_patch_size)
-                    print(f"Patch Data: {actual_patch_size}")
 
                     colors = [(patch_data[i], patch_data[i+1], patch_data[i+2], patch_data[i+3]) for i in range(0, len(patch_data), 4)]
                     paint_data.append({
@@ -85,7 +58,6 @@ class PatFile:
                         'colors': colors,
                         'actual_patch_size': actual_patch_size
                     })
-                    print(f"Colors: {colors}")
 
                 self.patches[paint_index] = {
                     'header_offsets': paint_patches,
@@ -93,66 +65,33 @@ class PatFile:
                 }
 
     def save(self, filename):
-        try:
-            with open(filename, 'wb') as f:
-                # Write magic and padding
-                f.write(b"Pat0")
-                f.write(b'\x00' * 12)
+        with open(filename, 'wb') as f:
+            # Write magic and padding
+            f.write(b"Pat0")
+            f.write(b'\x00' * 12)
 
-                # Write patch count and geometry patches per color patch
-                patch_count = self.patch_count
-                geometry_patches_per_color_patch = self.geometry_patches_per_color_patch
-                f.write(struct.pack('<H', patch_count))
-                f.write(struct.pack('<H', geometry_patches_per_color_patch))
+            # Write patch count and geometry patches per color patch
+            f.write(struct.pack('<H', self.patch_count))
+            f.write(struct.pack('<H', self.geometry_patches_per_color_patch))
 
-                print(f"patch_count: {patch_count}")
-                print(f"patch_count: {geometry_patches_per_color_patch}")
+            # Pad to next factor of 16
+            f.write(b'\x00' * (16 - (f.tell() % 16)))
 
-                # Pad to next factor of 16
-                f.write(b'\x00' * (16 - (f.tell() % 16)))
+            # Write header entries
+            for paint in self.patches:
+                for header_offset in paint['header_offsets']:
+                    f.write(struct.pack('<I', header_offset))
 
-                # Write header entries
-                for paint in self.patches:
-                    for header_offset in paint['header_offsets']:
-                        f.write(struct.pack('<I', header_offset))
-                
-                # Write patch data
-                for paint in self.patches:
-                    for patch_data in paint['paint_data']:
-                        f.write(struct.pack('<II', patch_data['target_offset'], patch_data['actual_patch_size']))
-                        for color in patch_data['colors']:
-                            f.write(struct.pack('<4B', *color))
-
-        except IOError as e:
-            raise IOError(f"Failed to save file: {e}")
+            # Write patch data
+            for paint in self.patches:
+                for patch_data in paint['paint_data']:
+                    f.write(struct.pack('<II', patch_data['target_offset'], patch_data['actual_patch_size']))
+                    for color in patch_data['colors']:
+                        f.write(struct.pack('<4B', *color))
 
     def get_patches(self):
         return self.patches
         
-class CollapsibleFrame(ttk.Frame):
-    def __init__(self, parent, text="", *args, **kwargs):
-        super().__init__(parent, *args, **kwargs)
-        self.text = text
-
-        self.header_frame = ttk.Frame(self)
-        self.header_frame.pack(fill="x", pady=5)
-
-        self.toggle_button = ttk.Button(self.header_frame, text=self.text, command=self.toggle)
-        self.toggle_button.pack(side="left")
-
-        self.sub_frame = ttk.Frame(self)
-
-        self.collapsed = True
-        self.toggle()
-
-    def toggle(self):
-        if self.collapsed:
-            self.sub_frame.pack(fill="x", padx=5)
-            self.collapsed = False
-        else:
-            self.sub_frame.pack_forget()
-            self.collapsed = True
-
 class PatEditor(tk.Tk):
     def __init__(self, pat_file):
         super().__init__()
@@ -162,47 +101,15 @@ class PatEditor(tk.Tk):
         self.create_widgets()
 
     def create_widgets(self):
-        # Create a scrolled canvas for the notebook
-        self.canvas = ScrolledCanvas(self)
-        self.canvas.pack(expand=True, fill='both')
-    
-        self.notebook = ttk.Notebook(self.canvas.scrollable_frame)
+        # Create a notebook for tabs
+        self.notebook = ttk.Notebook(self)
         self.notebook.pack(expand=True, fill='both')
-    
+
         for paint_index, paint in enumerate(self.pat_file.get_patches()):
             paint_frame = ttk.Frame(self.notebook)
             self.notebook.add(paint_frame, text=f"Paint {paint_index}")
-    
-            #for patch_index, patch_data in enumerate(paint['paint_data']):
-                #patch_collapse = CollapsibleFrame(paint_frame, text=f"Patch {patch_index}")
-                #patch_collapse.pack(fill='x', padx=5, pady=5)
-    
-                #frame = ttk.Frame(patch_collapse.sub_frame)
-                #frame.pack(pady=5, fill='x')
-    
-                # Display Target Offset
-                #target_offset_label = ttk.Label(frame, text=f"Target Offset: {patch_data['target_offset']}")
-                #target_offset_label.pack(side='left', padx=5)
-    
-                # Display Patch Size
-                #patch_size_label = ttk.Label(frame, text=f"Patch Size: {patch_data['actual_patch_size']}")
-                #patch_size_label.pack(side='left', padx=5)
-    
-                # Display RGBO Colors using Canvas and rectangles
-                #color_frame = ttk.Frame(frame)
-                #color_frame.pack(side='left', padx=5, pady=5)
-    
-                #patch_data['color_canvases'] = []
-                #for color_index, color in enumerate(patch_data['colors']):
-                    #color_swatch = tk.Canvas(color_frame, width=20, height=10)
-                    #color_swatch.pack(side='top', pady=2)
-    
-                    #rgb_color = color[:3]
-                    #hex_color = self.rgb_to_hex(rgb_color)
-                    #color_swatch.create_rectangle(0, 0, 30, 20, fill=hex_color)
-    
-                    #patch_data['color_canvases'].append(color_swatch)
 
+        # Add buttons for Save, Export, and Import
         save_button = ttk.Button(self, text="Save", command=self.save_file)
         save_button.pack(side='left', padx=5, pady=5)
 
@@ -211,13 +118,6 @@ class PatEditor(tk.Tk):
 
         load_button = ttk.Button(self, text="Import PNG", command=self.load_png)
         load_button.pack(side='left', padx=5, pady=5)
-
-        self.canvas.update_idletasks()
-        self.canvas.config(scrollregion=self.canvas.bbox("all"))
-        self.canvas.bind_all("<MouseWheel>", self.on_mousewheel)
-
-    def rgb_to_hex(self, rgb):
-        return f"#{rgb[0]:02x}{rgb[1]:02x}{rgb[2]:02x}"
 
     def save_file(self):
         save_path = filedialog.asksaveasfilename(defaultextension=".pat", filetypes=[("PAT files", "*.pat"), ("All files", "*.*")])
@@ -268,21 +168,11 @@ class PatEditor(tk.Tk):
                     new_color = png_pixels[color_index, 0]
                     patch_data['colors'][color_idx] = new_color
                     color_index += 1
-    
-            # Update GUI with new colors
-            for patch_data in paint['paint_data']:
-                for color_index, new_color in enumerate(patch_data['colors']):
-                    rgb_hex = self.rgb_to_hex(new_color[:3])
-                    patch_data['color_canvases'][color_index].delete("all")  # Clear previous rectangle
-                    patch_data['color_canvases'][color_index].create_rectangle(0, 0, 30, 20, fill=rgb_hex)  # Update color swatch
-    
+
             messagebox.showinfo("Load PNG", "PNG loaded successfully and applied to current paint")
     
         except Exception as e:
             messagebox.showerror("Error", f"Failed to update from PNG: {e}")
-
-    def on_mousewheel(self, event):
-        self.canvas.yview_scroll(-1 * int(event.delta / 120), "units")
 
 class MainApp(tk.Tk):
     def __init__(self):
